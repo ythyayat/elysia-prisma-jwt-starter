@@ -1,15 +1,22 @@
 {
-  "name": "backendElysiaPrismaJWTStarter",
+  "name": "elysia-prisma-jwt-starter",
   "version": "1.0.50",
+  "description": "A starter project for Elysia Prisma JWT by YthYayat",
+  "author": "YthYayat",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/jwt": "^1.0.2",
+    "@prisma/client": "^5.13.0",
     "elysia": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "prisma": "^5.13.0"
   },
   "module": "src/index.js"
 }
