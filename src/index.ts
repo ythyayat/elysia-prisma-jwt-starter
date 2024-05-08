@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
-import { auth } from "./routes";
+import { auth, user } from "./routes";
 
 const app = new Elysia()
-  .group("/api", (app) => app.group("/v1", (app) => app.use(auth)))
+  .group("/api", (app) => app.group("/v1", (app) => app.use(auth).use(user)))
   .get("/", () => "Hello Elysia")
   .listen(Bun.env.PORT || 3000);
 
