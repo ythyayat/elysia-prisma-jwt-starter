@@ -14,9 +14,7 @@ Initial project using **ElysiaJs** and **Prisma** with **JWT** functionalities i
 - Run `bunx prisma generate` or `bunx prisma db push` to initialize the database from the prisma [schema file](prisma/schema.prisma).
 - Run `bun run dev` to start the application.
 
-## Note
-
-Inspired by [elysia-jwt-example by msalihaltun]([reference-link])
+## Notes
 
 Feel free to contribute and create Pull Request
 
@@ -26,6 +24,8 @@ or just
 
 | [![Ythyayat][author-image]][author-link] | [YthYayat][author-link] |
 | ---------------------------------------- | ----------------------- |
+
+Inspired by [elysia-jwt-example by msalihaltun][reference-link]
 
 [buy-me-coffee-image]: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
 [buy-me-coffee-link]: https://www.buymeacoffee.com/ythyayat

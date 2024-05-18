@@ -1,4 +1,12 @@
-import { Prisma, prisma } from "libs";
+import { PaginationParams, Prisma, prisma } from "libs";
+
+interface FindUserParams {
+  search?: string;
+}
+
+interface FindUserParamsWithPagination
+  extends FindUserParams,
+    PaginationParams {}
 
 const userSelect = {
   id: true,
@@ -6,19 +14,45 @@ const userSelect = {
   name: true,
 };
 
-export const findUserById = async (id: string) => {
-  return prisma.user.findUnique({
+export const findUsersCount = async ({ search }: FindUserParams) => {
+  return prisma.user.count({
     where: {
-      id,
       deletedAt: null,
+      OR: search
+        ? [
+            { email: { contains: search, mode: "insensitive" } },
+            { name: { contains: search, mode: "insensitive" } },
+          ]
+        : undefined,
     },
+  });
+};
+
+export const findUsers = async ({
+  search,
+  page,
+  take,
+}: FindUserParamsWithPagination) => {
+  return prisma.user.findMany({
+    where: {
+      deletedAt: null,
+      OR: search
+        ? [
+            { email: { contains: search, mode: "insensitive" } },
+            { name: { contains: search, mode: "insensitive" } },
+          ]
+        : undefined,
+    },
+    take,
+    skip: (page - 1) * take,
     select: userSelect,
   });
 };
 
-export const findUsers = async () => {
-  return prisma.user.findMany({
+export const findUserById = async (id: string) => {
+  return prisma.user.findUnique({
     where: {
+      id,
       deletedAt: null,
     },
     select: userSelect,
