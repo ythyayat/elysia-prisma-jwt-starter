@@ -9,14 +9,14 @@
   },
   "dependencies": {
     "@elysiajs/cookie": "^0.8.0",
-    "@elysiajs/cors": "^1.0.2",
-    "@elysiajs/jwt": "^1.0.2",
-    "@prisma/client": "^5.13.0",
-    "elysia": "latest"
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/jwt": "^1.2.0",
+    "@prisma/client": "^6.1.0",
+    "elysia": "^1.2.6"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "prisma": "^5.13.0"
+    "bun-types": "^1.1.38",
+    "prisma": "^6.1.0"
   },
   "module": "src/index.js"
 }
