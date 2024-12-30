@@ -1,6 +1,7 @@
 import { jwtAccessSetup } from "utils";
-import type { Elysia } from "elysia";
+import type { Context, Cookie, Elysia } from "elysia";
 import { UserRepository } from "repositories";
+import { IncomingHttpHeaders } from "http2";
 
 export const isAuthenticated = (app: Elysia) =>
   app
@@ -44,3 +45,8 @@ export const isAuthenticated = (app: Elysia) =>
         };
       }
     });
+
+export interface BeforeHandleRefreshToken {
+  cookie: Record<string, Cookie<string | undefined>>;
+  set: Context<IncomingHttpHeaders>["set"];
+}

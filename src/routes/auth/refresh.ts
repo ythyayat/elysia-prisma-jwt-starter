@@ -3,6 +3,7 @@ import { Elysia } from "elysia";
 import { randomUUID } from "crypto";
 import { RefreshTokenRepository, UserRepository } from "repositories";
 import { jwtAccessSetup, jwtRefreshSetup, refreshTokenValue } from "utils";
+import { BeforeHandleRefreshToken } from "middlewares";
 
 export const refresh = new Elysia()
   .use(cookie())
@@ -34,14 +35,16 @@ export const refresh = new Elysia()
           message: "Unauthorized.",
         };
       }
-      const hashedToken = new Bun.CryptoHasher("sha512")
-        .update(refreshToken.value)
-        .digest("hex");
-      if (hashedToken !== existingToken.hashedToken) {
-        set.status = 401;
-        return {
-          message: "Unauthorized.",
-        };
+      if (refreshToken.value !== undefined) {
+        const hashedToken = new Bun.CryptoHasher("sha512")
+          .update(refreshToken.value)
+          .digest("hex");
+        if (hashedToken !== existingToken.hashedToken) {
+          set.status = 401;
+          return {
+            message: "Unauthorized.",
+          };
+        }
       }
 
       const user = await UserRepository.findUserById(existingToken.userId);
@@ -78,7 +81,10 @@ export const refresh = new Elysia()
       };
     },
     {
-      beforeHandle({ cookie: { refresh_token: refreshToken }, set }) {
+      beforeHandle({
+        cookie: { refresh_token: refreshToken },
+        set,
+      }: BeforeHandleRefreshToken) {
         if (!refreshToken) {
           set.status = 401;
           return {

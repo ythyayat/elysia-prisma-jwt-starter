@@ -2,6 +2,7 @@ import { jwtAccessSetup, jwtRefreshSetup } from "utils";
 import { Elysia } from "elysia";
 import { basicAuthModel } from "models";
 import { RefreshTokenRepository } from "repositories";
+import { BeforeHandleRefreshToken } from "middlewares";
 
 export const logout = new Elysia()
   .use(basicAuthModel)
@@ -34,7 +35,10 @@ export const logout = new Elysia()
       };
     },
     {
-      beforeHandle({ cookie: { refresh_token: refreshToken }, set }) {
+      beforeHandle({
+        cookie: { refresh_token: refreshToken },
+        set,
+      }: BeforeHandleRefreshToken) {
         if (!refreshToken) {
           set.status = 401;
           return {
