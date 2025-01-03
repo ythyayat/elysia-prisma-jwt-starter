@@ -4,6 +4,7 @@ export const createRefreshToken = async (data: {
   hashedToken: string;
   id: string;
   userId: string;
+  userAgent: string;
 }) => {
   return prisma.refreshToken.create({
     data,

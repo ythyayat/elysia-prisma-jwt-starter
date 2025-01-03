@@ -12,7 +12,14 @@ export const register = new Elysia()
   .use(jwtRefreshSetup)
   .post(
     "/register",
-    async ({ body, set, jwtAccess, jwtRefresh, cookie: { refresh_token } }) => {
+    async ({
+      body,
+      set,
+      jwtAccess,
+      jwtRefresh,
+      cookie: { refresh_token },
+      headers,
+    }) => {
       const existingUser = await UserRepository.findUserByEmail(body.email);
       if (existingUser) {
         set.status = 400;
@@ -39,6 +46,7 @@ export const register = new Elysia()
         hashedToken,
         id: refreshId,
         userId: user.id,
+        userAgent: String(headers["user-agent"]),
       });
 
       const accessToken = await jwtAccess.sign({

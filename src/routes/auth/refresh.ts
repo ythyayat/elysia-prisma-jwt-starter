@@ -16,6 +16,7 @@ export const refresh = new Elysia()
       jwtRefresh,
       jwtAccess,
       cookie: { refresh_token: refreshToken },
+      headers,
     }) => {
       const payload = await jwtRefresh.verify(refreshToken.value);
       if (!payload) {
@@ -70,6 +71,7 @@ export const refresh = new Elysia()
         hashedToken: hashedRefreshToken,
         id: refreshId,
         userId: user.id,
+        userAgent: String(headers["user-agent"]),
       });
 
       const accessToken = await jwtAccess.sign({

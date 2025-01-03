@@ -12,7 +12,14 @@ export const login = new Elysia()
   .use(cookie())
   .post(
     "/login",
-    async ({ body, set, jwtAccess, jwtRefresh, cookie: { refresh_token } }) => {
+    async ({
+      body,
+      set,
+      jwtAccess,
+      jwtRefresh,
+      cookie: { refresh_token },
+      headers,
+    }) => {
       const existingUser = await UserRepository.findUserByEmail(body.email);
       if (!existingUser) {
         set.status = 403;
@@ -53,6 +60,7 @@ export const login = new Elysia()
         hashedToken,
         id: refreshId,
         userId: existingUser.id,
+        userAgent: String(headers["user-agent"]),
       });
 
       refresh_token.set(refreshTokenValue(refreshToken));

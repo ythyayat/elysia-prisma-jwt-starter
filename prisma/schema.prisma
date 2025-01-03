@@ -29,6 +29,6 @@ model RefreshToken {
   hashedToken String
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  revoked     Boolean  @default(false)
+  userAgent   String
   createdAt   DateTime @default(now())
 }
